@@ -1,0 +1,81 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "map1.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "2.tmx": {
+            "scale": 1.3893749999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 319.208277103014,
+                "y": 184.61538461538464
+            }
+        },
+        "Level-01.tmx": {
+            "scale": 1.3893749999999998,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 320.64777327935235,
+                "y": 183.89563652721552
+            }
+        },
+        "Level-02.tmx": {
+            "scale": 1.3893749999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.64777327935235,
+                "y": 183.89563652721552
+            }
+        },
+        "Pixel Adventure.tsx": {
+            "scaleInDock": 1
+        },
+        "background.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "map1.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 326.33333333333337,
+                "y": 266.33333333333337
+            }
+        },
+        "pixel adventure.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/Users/ivanp/adventure/assets/images/Background",
+    "map.height": 23,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 40,
+    "openFiles": [
+        "map1.tmx"
+    ],
+    "project": "adventure.tiled-project",
+    "recentFiles": [
+        "map1.tmx",
+        "Level-02.tmx",
+        "Level-01.tmx",
+        "background.tsx",
+        "2.tmx",
+        "pixel adventure.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
