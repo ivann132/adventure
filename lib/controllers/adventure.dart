@@ -13,32 +13,31 @@ import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 
 class Adventure extends FlameGame
-    with HasKeyboardHandlerComponents, DragCallbacks, HasCollisionDetection {
+    with
+        HasKeyboardHandlerComponents,
+        DragCallbacks,
+        HasCollisionDetection,
+        TapCallbacks {
   @override
   Color backgroundColor() => const Color(0xFF211F30);
-  late final CameraComponent cam;
-  Player player = Player();
+  late CameraComponent cam;
+  Player player = Player(character: 'Mask Dude');
   late JoystickComponent joystick;
   bool showJoystik = true;
+  bool playSounds = true;
+  double soundVolume = 1.0;
+  List<String> levelNames = ['map1', 'map1'];
+  int currentLevelIndex = 0;
 
   @override
   FutureOr<void> onLoad() async {
     await images.loadAllImages();
 
-    final world = Level(
-      levelName: 'map1',
-      player: player,
-    );
-
-    cam = CameraComponent.withFixedResolution(
-        world: world, width: 640, height: 360);
-    cam.viewfinder.anchor = Anchor.topLeft;
-
-    addAll([cam..priority = -1, world..priority = -1]);
+    _loadlevel();
 
     if (showJoystik) {
       addJoystick();
-      // debugMode = true;
+      add(JumpButtonController());
     }
 
     FlameAudio.bgm.initialize();
@@ -72,21 +71,55 @@ class Adventure extends FlameGame
     );
 
     add(joystick);
-    add(JumpButtonController());
   }
 
   void updateJoystick() {
     switch (joystick.direction) {
       case JoystickDirection.left:
+      case JoystickDirection.upLeft:
+      case JoystickDirection.downLeft:
         player.horizontalMovement = -1;
         break;
       case JoystickDirection.right:
+      case JoystickDirection.upRight:
+      case JoystickDirection.downRight:
         player.horizontalMovement = 1;
         break;
       default:
         player.horizontalMovement = 0;
         break;
     }
+  }
+
+  void loadNextLevel() {
+    removeWhere((component) => component is Level);
+
+    if (currentLevelIndex < levelNames.length - 1) {
+      currentLevelIndex++;
+      _loadlevel();
+    } else {
+      // no more levels
+      currentLevelIndex = 0;
+      _loadlevel();
+    }
+  }
+
+  void _loadlevel() {
+    Future.delayed(const Duration(seconds: 1), () {
+      Level world = Level(
+        player: player,
+        levelName: levelNames[currentLevelIndex],
+      );
+
+      cam = CameraComponent.withFixedResolution(
+        world: world,
+        width: 640,
+        height: 360,
+      );
+      cam.viewfinder.anchor = Anchor.topLeft;
+
+      addAll([cam..priority = -1, world..priority = -1]);
+    });
   }
 
   void goGame() {

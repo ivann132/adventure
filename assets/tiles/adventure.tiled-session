@@ -17,6 +17,9 @@
             }
         },
         "Level-01.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
             "scale": 1.3893749999999998,
             "selectedLayer": 1,
             "viewCenter": {
@@ -47,11 +50,11 @@
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 1,
-            "selectedLayer": 0,
+            "scale": 1.5,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 308.5,
-                "y": 364.5
+                "x": 350.99999999999994,
+                "y": 302.99999999999994
             }
         },
         "pixel adventure.tsx": {
@@ -70,6 +73,7 @@
         "map1.tmx"
     ],
     "project": "adventure.tiled-project",
+    "property.type": "float",
     "recentFiles": [
         "background2.tsx",
         "map1.tmx",

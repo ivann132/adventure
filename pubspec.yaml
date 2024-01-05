@@ -70,6 +70,7 @@ flutter:
     - assets/images/Traps/Saw/
     - assets/images/Items/Checkpoints/Checkpoint/
     - assets/images/Items/Fruits/
+    - assets/images/Main Characters/
     - assets/images/Main Characters/Mask Dude/
     - assets/images/Enemies/Chicken/
   #   - images/a_dot_burr.jpeg

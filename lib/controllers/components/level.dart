@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:adventure/controllers/adventure.dart';
 import 'package:adventure/controllers/components/checkpoint.dart';
+import 'package:adventure/controllers/components/chicken.dart';
 import 'package:adventure/controllers/components/collision_block.dart';
 import 'package:adventure/controllers/components/fruits.dart';
 import 'package:adventure/controllers/components/player.dart';
+import 'package:adventure/controllers/components/saw.dart';
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
@@ -28,7 +30,6 @@ class Level extends World with HasGameRef<Adventure> {
     return super.onLoad();
   }
 
-
   void _spawningObjects() {
     final spawnPointsLayer = level.tileMap.getLayer<ObjectGroup>('Spawnpoints');
 
@@ -47,12 +48,37 @@ class Level extends World with HasGameRef<Adventure> {
             );
             add(fruit);
             break;
+          case 'Saw':
+            final isVertical = spawnPoint.properties.getValue('isVertical');
+            final offNeg = spawnPoint.properties.getValue('offNeg');
+            final offPos = spawnPoint.properties.getValue('offPos');
+            final saw = Saw(
+              isVertical: isVertical,
+              offNeg: offNeg,
+              offPos: offPos,
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+            );
+            add(saw);
+            break;
           case 'Checkpoint':
             final checkpoint = Checkpoint(
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
             add(checkpoint);
+            break;
+          case 'Chicken':
+            final offNeg = spawnPoint.properties.getValue('offNeg');
+            final offPos = spawnPoint.properties.getValue('offPos');
+            final chicken = Chicken(
+              position: Vector2(spawnPoint.x, spawnPoint.y),
+              size: Vector2(spawnPoint.width, spawnPoint.height),
+              offNeg: offNeg,
+              offPos: offPos,
+            );
+            add(chicken);
+            break;
           default:
         }
       }
