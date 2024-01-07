@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:adventure/controllers/adventure.dart';
+import 'package:adventure/controllers/components/audio_manager.dart';
 import 'package:adventure/controllers/components/checkpoint.dart';
 import 'package:adventure/controllers/components/chicken.dart';
-import 'package:adventure/controllers/components/collision_block.dart';
 import 'package:adventure/controllers/components/fruits.dart';
+import 'package:adventure/controllers/components/collision_block.dart';
 import 'package:adventure/controllers/components/player.dart';
 import 'package:adventure/controllers/components/saw.dart';
 import 'package:flame/components.dart';
@@ -19,6 +20,7 @@ class Level extends World with HasGameRef<Adventure> {
 
   @override
   FutureOr<void> onLoad() async {
+    AudioManager.playBgm('Angkara.wav', 0.3);
     level = await TiledComponent.load('$levelName.tmx', Vector2.all(16));
     await add(level..priority = -1);
 
@@ -41,12 +43,12 @@ class Level extends World with HasGameRef<Adventure> {
             add(player);
             break;
           case 'Fruit':
-            final fruit = Fruit(
+            final item = Fruit(
               fruit: spawnPoint.name,
               position: Vector2(spawnPoint.x, spawnPoint.y),
               size: Vector2(spawnPoint.width, spawnPoint.height),
             );
-            add(fruit);
+            add(item);
             break;
           case 'Saw':
             final isVertical = spawnPoint.properties.getValue('isVertical');
@@ -99,6 +101,16 @@ class Level extends World with HasGameRef<Adventure> {
             );
             collisionBlocks.add(platform);
             add(platform);
+            break;
+          case 'Void':
+            final ded = CollisionBlock(
+
+              position: Vector2(collision.x, collision.y),
+              size: Vector2(collision.width, collision.height),
+              isVoid: true,
+            );
+            collisionBlocks.add(ded);
+            add(ded);
             break;
           default:
             final block = CollisionBlock(

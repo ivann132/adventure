@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:adventure/controllers/components/hud.dart';
 import 'package:adventure/controllers/components/jump_button.dart';
 import 'package:adventure/controllers/components/level.dart';
 import 'package:adventure/controllers/components/player.dart';
+import 'package:adventure/models/player_data.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -22,6 +24,7 @@ class Adventure extends FlameGame
   Color backgroundColor() => const Color(0xFF211F30);
   late CameraComponent cam;
   Player player = Player(character: 'Mask Dude');
+  final playerData = PlayerData();
   late JoystickComponent joystick;
   bool showJoystik = true;
   bool playSounds = true;
@@ -35,22 +38,16 @@ class Adventure extends FlameGame
 
     _loadlevel();
 
-    if (showJoystik) {
-      addJoystick();
-      add(JumpButtonController());
-    }
-
-    FlameAudio.bgm.initialize();
-    FlameAudio.audioCache.load("Angkara.wav");
-    FlameAudio.bgm.play("Angkara.wav");
+    addJoystick();
+    add(JumpButtonController());
+    add(Hud(priority: 1));
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
-    if (showJoystik) {
-      updateJoystick();
-    }
+    updateJoystick();
+
     super.update(dt);
   }
 

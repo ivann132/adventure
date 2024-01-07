@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:adventure/controllers/adventure.dart';
+import 'package:adventure/controllers/components/audio_manager.dart';
 import 'package:adventure/controllers/components/checkpoint.dart';
 import 'package:adventure/controllers/components/chicken.dart';
-import 'package:adventure/controllers/components/collision_block.dart';
 import 'package:adventure/controllers/components/fruits.dart';
+import 'package:adventure/controllers/components/collision_block.dart';
 import 'package:adventure/controllers/components/saw.dart';
 import 'package:adventure/controllers/components/utils.dart';
 import 'package:adventure/models/customehitbox.dart';
@@ -50,6 +51,7 @@ class Player extends SpriteAnimationGroupComponent
   bool isOnGround = false;
   bool hasJumped = false;
   bool gotHit = false;
+  bool isJumping = false;
   bool reachedCheckpoint = false;
   List<CollisionBlock> collisionBlocks = [];
   CustomeHitbox hitbox = CustomeHitbox(
@@ -114,7 +116,11 @@ class Player extends SpriteAnimationGroupComponent
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     if (!reachedCheckpoint) {
-      if (other is Fruit) other.collidedWithPlayer();
+      if (other is Fruit) {
+        AudioManager.playSfx('collect_fruit.wav', 30.0);
+        other.collidedWithPlayer();
+        gameRef.playerData.collect.value += 1;
+      }
       if (other is Saw) _respawn();
       if (other is Chicken) other.collidedWithPlayer();
       if (other is Checkpoint) _reachedCheckpoint();
@@ -200,11 +206,12 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _playerJump(double dt) {
-    if (game.playSounds) FlameAudio.play('jump.wav', volume: game.soundVolume);
+    AudioManager.playSfx('jump.wav', 30.0);
     velocity.y = -_jumpForce;
     position.y += velocity.y * dt;
     isOnGround = false;
     hasJumped = false;
+    isJumping = true;
   }
 
   void _checkHorizontalCollisions() {
@@ -243,12 +250,34 @@ class Player extends SpriteAnimationGroupComponent
             break;
           }
         }
+      } else if (block.isVoid) {
+        if (checkCollision(this, block)) {
+          if (velocity.y > 0) {
+            AudioManager.playSfx('hit.wav', 30.0);
+
+            velocity.y = 0;
+            velocity.x = 0;
+            scale.x = 1;
+            position = startingPosition;
+
+            if (gameRef.playerData.health.value > 0) {
+              gameRef.playerData.health.value -= 1;
+            }
+
+            break;
+          }
+        }
       } else {
         if (checkCollision(this, block)) {
           if (velocity.y > 0) {
             velocity.y = 0;
             position.y = block.y - hitbox.height - hitbox.offsetY;
             isOnGround = true;
+
+            if (isJumping) {
+              AudioManager.playSfx('landing.wav', 30.0);
+              isJumping = false;
+            }
             break;
           }
           if (velocity.y < 0) {
@@ -261,7 +290,7 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _respawn() async {
-    if (game.playSounds) FlameAudio.play('hit.wav', volume: game.soundVolume);
+    AudioManager.playSfx('hit.wav', 30.0);
     const canMoveDuration = Duration(milliseconds: 400);
     gotHit = true;
     current = PlayerState.hit;
