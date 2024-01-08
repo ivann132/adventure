@@ -1,16 +1,17 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:adventure/controllers/components/audio_manager.dart';
 import 'package:adventure/controllers/components/hud.dart';
 import 'package:adventure/controllers/components/jump_button.dart';
 import 'package:adventure/controllers/components/level.dart';
 import 'package:adventure/controllers/components/player.dart';
 import 'package:adventure/models/player_data.dart';
+import 'package:adventure/views/Complete_level.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +30,7 @@ class Adventure extends FlameGame
   bool showJoystik = true;
   bool playSounds = true;
   double soundVolume = 1.0;
-  List<String> levelNames = ['map1', 'map1'];
+  List<String> levelNames = ['map1'];
   int currentLevelIndex = 0;
 
   @override
@@ -97,7 +98,11 @@ class Adventure extends FlameGame
     } else {
       // no more levels
       currentLevelIndex = 0;
-      _loadlevel();
+      if (currentLevelIndex == 0) {
+      AudioManager.stopBgm();
+      pauseEngine();
+      overlays.add(CompleteGame.id);
+    }
     }
   }
 

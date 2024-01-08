@@ -313,9 +313,7 @@ class Player extends SpriteAnimationGroupComponent
 
   void _reachedCheckpoint() async {
     reachedCheckpoint = true;
-    if (game.playSounds) {
-      FlameAudio.play('disappear.wav', volume: game.soundVolume);
-    }
+    AudioManager.playSfx('disappear.wav', 30.0);
     if (scale.x > 0) {
       position = position - Vector2.all(32);
     } else if (scale.x < 0) {

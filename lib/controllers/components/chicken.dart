@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:adventure/controllers/components/audio_manager.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:adventure/controllers/adventure.dart';
@@ -133,9 +134,7 @@ class Chicken extends SpriteAnimationGroupComponent
 
   void collidedWithPlayer() async {
     if (player.velocity.y > 0 && player.y + player.height > position.y) {
-      if (game.playSounds) {
-        FlameAudio.play('bounce.wav', volume: game.soundVolume);
-      }
+      AudioManager.playSfx('bounce.wav', 30.0);
       gotStomped = true;
       current = State.hit;
       player.velocity.y = -_bounceHeight;

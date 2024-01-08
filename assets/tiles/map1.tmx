@@ -90,8 +90,8 @@
   <object id="49" type="Saw" x="416" y="128" width="32" height="32">
    <properties>
     <property name="isVertical" type="bool" value="true"/>
-    <property name="offNeg" type="float" value="4"/>
-    <property name="offPos" type="float" value="3"/>
+    <property name="offNeg" type="float" value="2"/>
+    <property name="offPos" type="float" value="2"/>
    </properties>
   </object>
   <object id="50" name="Chicken" type="Chicken" x="400" y="224" width="32" height="32">

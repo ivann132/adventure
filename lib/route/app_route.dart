@@ -2,6 +2,7 @@ import 'package:adventure/controllers/adventure.dart';
 import 'package:adventure/controllers/welcome/welcome_control.dart';
 import 'package:adventure/views/adventure_game.dart';
 import 'package:adventure/views/menu_game.dart';
+import 'package:adventure/views/setting_game.dart';
 import 'package:adventure/views/welcome.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,13 @@ class AppRoutes {
     GetPage(
       name: '/menu',
       page: () => MenuGame(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut(() => Adventure());
+      }),
+    ),
+    GetPage(
+      name: '/setting',
+      page: () => const SettingsGame(),
       binding: BindingsBuilder(() {
         Get.lazyPut(() => Adventure());
       }),

@@ -67,6 +67,18 @@ class MenuGame extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
+                          Get.toNamed('/setting');
+                        },
+                        child: const Text(
+                          'Settings',
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
                           exit(0);
                         },
                         child: const Text(

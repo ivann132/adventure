@@ -34,6 +34,7 @@ class Hud extends Component with HasGameRef<Adventure> {
 
     final pauseButton = SpriteButtonComponent(
       onPressed: () {
+        AudioManager.playSfx('ui_pause.wav', 30.0);
         AudioManager.pauseBgm();
         gameRef.pauseEngine();
         gameRef.overlays.add(PauseMenuGame.id);

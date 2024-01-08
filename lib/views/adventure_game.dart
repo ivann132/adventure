@@ -1,4 +1,5 @@
 import 'package:adventure/controllers/adventure.dart';
+import 'package:adventure/views/Complete_level.dart';
 import 'package:adventure/views/game_over_menu.dart';
 import 'package:adventure/views/pause_menu.dart';
 import 'package:flame/game.dart';
@@ -16,6 +17,7 @@ class Adventure_game extends StatelessWidget {
         overlayBuilderMap: {
           PauseMenuGame.id: (context, game) => PauseMenuGame(gameRef: game),
           GameOverGame.id: (context, game) => GameOverGame(gameRef: game),
+          CompleteGame.id: (context, game) => CompleteGame(gameRef: game)
         },
       ),
     );
